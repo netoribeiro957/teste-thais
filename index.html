@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Um convite especial para você, Thais 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Corações flutuantes de fundo */
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            animation: floatUp 4s linear infinite;
+            bottom: -20px;
+            user-select: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .card h1 {
+            color: #d63384;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-yes {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn-yes:hover {
+            background-color: #e63956;
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background-color: #e0e0e0;
+            color: #555;
+            position: absolute;
+        }
+
+        /* Tela de sucesso */
+        .success-message {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .success-message h2 {
+            color: #2b9348;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: #444;
+            font-size: 16px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <h1>Thais... 💖</h1>
+        <p>Eu tava pensando aqui... Que tal a gente sair pra curtir um momento legal juntos? Aceita esse convite? 🥰</p>
+        
+        <div class="buttons" id="buttonArea">
+            <button class="btn btn-yes" onclick="aceitarConvite()">Sim! ❤️</button>
+            <button class="btn btn-no" id="btnNo" onmouseover="fugir()" onclick="fugir()">Não 😢</button>
+        </div>
+    </div>
+
+    <div class="card success-message" id="successCard">
+        <h2>Oba! Sabia que você ia aceitar! 🥰🎉</h2>
+        <p>Já pode ir preparando o look e separando um tempinho na agenda. Depois me avisa qual o melhor dia pra você! 🥂✨</p>
+    </div>
+
+    <script>
+        // Função para o botão "Não" fugir do mouse / toque
+        function fugir() {
+            const btnNo = document.getElementById('btnNo');
+            const maxX = window.innerWidth - btnNo.offsetWidth - 50;
+            const maxY = window.innerHeight - btnNo.offsetHeight - 50;
+            
+            const randomX = Math.random() * (maxX - 50) + 20;
+            const randomY = Math.random() * (maxY - 50) + 20;
+
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+        }
+
+        // Função ao aceitar o convite
+        fn = aceitarConvite = function() {
+            document.getElementById('mainCard').style.display = 'none';
+            document.getElementById('successCard').style.display = 'block';
+            
+            // Disparar corações extras
+            for (let i = 0; i < 30; i++) {
+                criarCoracao();
+            }
+        }
+
+        // Criar corações flutuantes na tela
+        function criarCoracao() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        // Gerar corações contínuos no fundo
+        setInterval(criarCoracao, 300);
+    </script>
+</body>
+</html>
